@@ -1,0 +1,85 @@
+
+/*
+1-je veux ajouter au panier 
+  1a-si le panier n'existe pas j veux le cree
+  1b-si il existe je veux le recuperer
+2-je veux ajouter le produit dans le panier
+    2a-si il n'existe pas j'ajoute le produit dans le panier
+    2b-si il exist edans la meme couleur mettre a jour la quantiter
+3-je veux calculer le prix total du panier
+4- je veux stocker mon panier
+
+mon contenant c'est le panier 
+mon contenue c'est l'article 
+un article est defini par la quantiter couleur et id 
+mon panier definit par une collection d'article et le prix total
+*/
+
+let produit = {
+  _id : "chaine",
+  couleur : "chaine",
+  quantite : 0
+}
+
+const NomPanier = "panier";
+
+/**
+ * 1A
+ */
+function creerPanier(){
+    return {
+    produits : [],
+    prix_total : 0
+  }
+}
+/**
+ * 1B
+ */
+function recupPanier() {
+  return JSON.parse(localStorage.getItem(NomPanier));
+}
+
+function produitExiste(produitAAjouter){
+  let existe = false;
+  recupPanier().produits foreach produit {
+    if(produit._id === produitAAjouter._id && produit.couleur === produitAAjouter.couleur)
+      existe = true
+  }
+  return existe;
+}
+
+
+
+/**
+ * 4
+ */
+function savePanier(panier) {
+  localstorage.SetItem(nomPanier , JSON.stringify(panier))
+}
+
+
+
+function addToCart(produit, quantite) {
+  let panier = panierExiste() ? recupPanier() : creerPanier();
+  
+  if(produitExiste(produit)) {
+    mettreAjourProduit(produit);
+  }
+  else  {
+    ajouterProduit()
+  }
+  
+  panier.prix = calculerPrix(panier.produits);
+  
+  savePanier(panier);
+  
+}
+
+/**
+ * fonction panierExiste()
+ * paramètres : aucun
+ * retour : booléen
+ * 		vrai si le panier est déjà créé
+ * 		faux si il n'existe pas.
+ */
+
