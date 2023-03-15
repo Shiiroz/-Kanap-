@@ -29,12 +29,21 @@ const getElement = async () => {
 const addToCart = document.getElementById("addToCart")
 addToCart.addEventListener("click", () =>{
     const addPro ={
-        quantity : document.getElementById("colors").value,
+        quantity : document.getElementById("quantity").value,
         color : document.getElementById("colors").value,
         id : id
     }
 })
 
+addProductLocalStorage = []
+if(localStorage.getItem("addToCard") !==null){
+    addProductLocalStorage = JSON.parse(localStorage.getItem("addToCart"))
+    addProductLocalStorage.push(addToCart)
+    localStorage.setItem("addToCart", JSON.stringify(addProductLocalStorage))
+} else {
+    addProductLocalStorage.push(addProduct)
+    localStorage.setItem("addToCart", JSON.stringify(addProductLocalStorage))
+}
 
 getElement();
 
