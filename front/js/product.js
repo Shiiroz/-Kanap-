@@ -25,40 +25,69 @@ const getElement = async () => {
         }
     })
 }
+const button = document.getElementById("addToCart");
 
-const addToCart = document.getElementById("addToCart")
-addToCart.addEventListener("click", () =>{
-    const addPro ={
-        quantity : document.getElementById("quantity").value,
-        color : document.getElementById("colors").value,
-        id : id
+
+// liste des actions déclenchées au clic sur le bouton "ajouter"
+button.addEventListener("click", function() {
+  let basketValue = {
+    //initialisation de la variable basketValue
+    idSelectedProduct: _id,
+    nameSelectedProduct: document.getElementById("title").innerHTML,
+    colorSelectedProduct: document.getElementById("colors").value,
+    quantity: document.getElementById("quantity").value
+  };
+
+  //je crée une fonction de récupération du panier
+  function getBasket() {
+    let basketValue = JSON.parse(localStorage.getItem("kanapLs"));
+    if (basketValue === null) {
+      return [];				//si le LocalStorage est vide, on crée un tableau vide
+    } else {
+      return basketValue;
     }
-})
+  }
 
-addProductLocalStorage = []
-if(localStorage.getItem("addToCard") !==null){
-    addProductLocalStorage = JSON.parse(localStorage.getItem("addToCart"))
-    addProductLocalStorage.push(addToCart)
-    localStorage.setItem("addToCart", JSON.stringify(addProductLocalStorage))
-} else {
-    addProductLocalStorage.push(addProduct)
-    localStorage.setItem("addToCart", JSON.stringify(addProductLocalStorage))
-}
+  //je crée une fonction d'ajout au panier avec argument product
+  function addBasket(product) {
+    let basketValue = getBasket();
+    let foundProducts = basketValue.find(function(item) {
+      /// on définit foundProducts comme l'article à trouver
+      return (
+        item.idSelectedProduct === product.idSelectedProduct &&
+        item.colorSelectedProduct === product.colorSelectedProduct	
+      );
+    }); //si les produits du panier et les produits du LS n'ont pas même ID et même couleur
+    // il retournera undefined  
+    if (
+      foundProducts == undefined &&
+      product.colorSelectedProduct != "" &&			//si les consitions sont OK
+      product.quantity > 0 &&
+      product.quantity <= 100
+    ) {
+      basketValue.push(product);					 //dans le Ls
+    } else if (foundProducts) {
+      let newQuantity = parseInt(foundProducts.quantity) + parseInt(product.quantity); //CUMUL Quantité si présent ID et color
+      foundProducts.quantity = newQuantity;
+    } else {
+      alert("Veuillez sélectionner une quantité et une couleur correctes, SVP");
+      return;
+    }
+    saveBasket(basketValue);
+    alert(
+      `Le canapé ${product.nameSelectedProduct} ${product.colorSelectedProduct} a été ajouté en ${product.quantity} exemplaires à votre panier !`
+    );
+  }
+  //je crée une fonction de sauvegarde du panier
+  function saveBasket(basketValue) {
+    localStorage.setItem("kanapLs", JSON.stringify(basketValue));
+  }
 
-getElement();
+  // Si le choix de couleur est vide
+  if (basketValue.colorSelectedProduct === "") {
+    alert("Veuillez sélectionner une couleur avant d'ajouter au panier.");
+    return;
+  }
+  
 
-
-/*
-1-je veux ajouter au panier 
-  1a-si le panier n'existe pas j veux le cree
-  1b-si il existe je veux le recuperer
-2-je veux ajouter le produit dans le panier
-    2a-si il n'existe pas j'ajoute le produit dans le panier
-    2b-si il exist edans la meme couleur mettre a jour la quantiter
-3-je veux calculer le prix total du panier
-
-mon contenant c'est le panier 
-mon contenue c'est l'article 
-un article est defini par la quantiter couleur et id 
-mon panier definit par une collection d'article et le prix total
-*/
+  getElement();
