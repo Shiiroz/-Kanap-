@@ -1,9 +1,12 @@
+// Récupération de l'ID du produit à afficher depuis l'URL
 const params = new URL(document.location).searchParams;
 const _id  = params.get("_id");
+
+//  l'URL de l'API pour récupérer les informations du produit
 const url = `http://localhost:3000/api/products/${_id}`;
 console.log(url)
 
-
+// Récupère l'élément correspondant à l'id sélectionné depuis l'API
 const getElement = async () => {
     fetch(url)
     .then(function(response){
@@ -28,7 +31,9 @@ const getElement = async () => {
 
 const button = document.getElementById("addToCart");
 
+// Actions déclenchées au clic sur le bouton "ajouter"
 button.addEventListener("click", function(){
+   // Récupère les informations de l'article sélectionné
   let produitValue = {
     idSelectedProduct: _id,
     nameSelectedProduct: document.getElementById("title").innerHTML,
@@ -38,6 +43,8 @@ button.addEventListener("click", function(){
   addBasket(produitValue);
 });
 
+//récupère les informations du panier stockées dans le localStorage
+// associée à la clé "kanapLs"
 function getBasket() {
   let produitValue = JSON.parse(localStorage.getItem("kanapLs"));
   if (produitValue === null) {
