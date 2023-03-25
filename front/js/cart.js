@@ -25,17 +25,19 @@ if (cartItems.length === 0) {
 
   // parcourir chaque article dans le panier et ajouter une ligne à la table pour chaque article
   let total = 0;
+                    console.log(cartItems);
   cartItems.forEach(item => {
     const row = document.createElement('tr');
+    const price = item.price / 100; // diviser par 100 pour afficher le prix en euros
     row.innerHTML = `
       <td>${item.nameSelectedProduct}</td>
       <td>${item.colorSelectedProduct}</td>
       <td>${item.quantity}</td>
-      <td>${item.price} €</td>
-      <td>${item.price * item.quantity} €</td>
+      <td>${price.toFixed(2)} €</td>
+      <td>${(price * item.quantity).toFixed(2)} €</td>
     `;
     table.appendChild(row);
-    total += item.price * item.quantity || 0;
+    total += price * item.quantity || 0;
   });
 
   // ajouter la table au conteneur d'affichage du panier

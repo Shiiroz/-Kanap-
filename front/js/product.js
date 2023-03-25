@@ -31,6 +31,7 @@ const getElement = async () => {
 
 const button = document.getElementById("addToCart");
 
+
 // Actions déclenchées au clic sur le bouton "ajouter"
 button.addEventListener("click", function(){
    // Récupère les informations de l'article sélectionné
