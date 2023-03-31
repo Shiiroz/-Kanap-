@@ -39,7 +39,8 @@ button.addEventListener("click", function(){
     idSelectedProduct: _id,
     nameSelectedProduct: document.getElementById("title").innerHTML,
     colorSelectedProduct: document.getElementById("colors").value,
-    quantity: document.getElementById("quantity").value
+    quantity: document.getElementById("quantity").value,
+    prix: document.getElementById("price").value
   }
   addBasket(produitValue);
 });
@@ -56,6 +57,9 @@ function getBasket() {
 }
 
 function addBasket(product) {
+  
+
+
   let produitValue = getBasket();
   let foundProducts = produitValue.find(function(item) {
     return (
@@ -69,6 +73,7 @@ function addBasket(product) {
     product.quantity > 0 &&
     product.quantity <= 100
   ) {
+    product.quantity = parseInt(product.quantity);
     produitValue.push(product);
   } else if (foundProducts) {
     let newQuantity = parseInt(foundProducts.quantity) + parseInt(product.quantity);

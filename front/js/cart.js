@@ -27,8 +27,16 @@ if (cartItems.length === 0) {
   let total = 0;
                     console.log(cartItems);
   cartItems.forEach(item => {
+    // on a chaque élément avec sa quantité, son id, sa couleur
+    // il nous manque le prix unitaire qu'on sait récupérer dans l'api
+     // todo : aller récupérer le prix de l'élément (le canapé ) via l'api.
+     // puis on multiplie le prix unitaire par la quantité
+     // puis on affiche le prix dans le tableau.
+
+     
     const row = document.createElement('tr');
-    const price = item.price / 100; // diviser par 100 pour afficher le prix en euros
+   
+    const price = item.quantity /100 ; // diviser par 100 pour afficher le prix en euros
     row.innerHTML = `
       <td>${item.nameSelectedProduct}</td>
       <td>${item.colorSelectedProduct}</td>
@@ -49,3 +57,4 @@ if (cartItems.length === 0) {
   totalRow.innerHTML = `<p>Total: ${total} €</p>`;
   cartContainer.appendChild(totalRow);
 }
+
