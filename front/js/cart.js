@@ -24,29 +24,25 @@ if (cartItems.length === 0) {
   table.appendChild(headerRow);
 
   // parcourir chaque article dans le panier et ajouter une ligne à la table pour chaque article
-  let total = 0;
-                    console.log(cartItems);
-  cartItems.forEach(item => {
-    // on a chaque élément avec sa quantité, son id, sa couleur
-    // il nous manque le prix unitaire qu'on sait récupérer dans l'api
-     // todo : aller récupérer le prix de l'élément (le canapé ) via l'api.
-     // puis on multiplie le prix unitaire par la quantité
-     // puis on affiche le prix dans le tableau.
+let total = 0;
+console.log(cartItems);
+cartItems.forEach(async item => {
+  // aller récupérer le prix de l'article via l'API
+  const response = await fetch(`http://localhost:3000/api/products/${item.productId}`);
+  const data = await response.json();
+  const price = data.price / 100; // diviser par 100 pour afficher le prix en euros
 
-     
-    const row = document.createElement('tr');
-   
-    const price = item.quantity /100 ; // diviser par 100 pour afficher le prix en euros
-    row.innerHTML = `
-      <td>${item.nameSelectedProduct}</td>
-      <td>${item.colorSelectedProduct}</td>
-      <td>${item.quantity}</td>
-      <td>${price.toFixed(2)} €</td>
-      <td>${(price * item.quantity).toFixed(2)} €</td>
-    `;
-    table.appendChild(row);
-    total += price * item.quantity || 0;
-  });
+  const row = document.createElement('tr');
+  row.innerHTML = `
+    <td>${item.nameSelectedProduct}</td>
+    <td>${item.colorSelectedProduct}</td>
+    <td>${item.quantity}</td>
+    <td>${price.toFixed(2)} €</td>
+    <td>${(price * item.quantity).toFixed(2)} €</td>
+  `;
+  table.appendChild(row);
+  total += price * item.quantity || 0;
+});
 
   // ajouter la table au conteneur d'affichage du panier
   cartContainer.appendChild(table);
@@ -57,4 +53,3 @@ if (cartItems.length === 0) {
   totalRow.innerHTML = `<p>Total: ${total} €</p>`;
   cartContainer.appendChild(totalRow);
 }
-
