@@ -36,7 +36,7 @@ if (cartItems.length === 0) {
 
 
     // aller récupérer le prix de l'article via l'API
-    const response = await fetch(`http://localhost:3000/api/products/${item.productId}`);
+    const response = await fetch(`http://localhost:3000/api/products/${idSelectedProduct}`);
     const data = await response.json();
     const price = data.price / 100; // diviser par 100 pour afficher le prix en euros
 
