@@ -1,6 +1,16 @@
 // récupérer le panier depuis le localStorage
 const cartItems = JSON.parse(localStorage.getItem('kanapLs')) || [];
 
+/**
+ * 
+ */
+
+const ListeDesProduits = document.getElementById("cart__items").innerHTML= "je mets mon code ici";
+const NombreDeProduits = document.getElementById("totalQuantity").innerHTML= 12;
+const PrixTotal = document.getElementById("totalPrice").innerHTML= 4000;
+/**
+ * 
+ */
 // sélectionner le conteneur d'affichage du panier
 const cartContainer = document.querySelector('.cart');
 
@@ -36,7 +46,7 @@ if (cartItems.length === 0) {
 
 
     // aller récupérer le prix de l'article via l'API
-    const response = await fetch(`http://localhost:3000/api/products/${idSelectedProduct}`);
+    const response = await fetch(`http://localhost:3000/api/products/${item.idSelectedProduct}`);
     const data = await response.json();
     const price = data.price / 100; // diviser par 100 pour afficher le prix en euros
 
