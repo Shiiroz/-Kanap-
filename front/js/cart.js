@@ -1,74 +1,70 @@
-// récupérer le panier depuis le localStorage
-const cartItems = JSON.parse(localStorage.getItem('kanapLs')) || [];
+// Récupération du localstorage
+let addToLocalStorage = JSON.parse(localStorage.getItem("kanapLs"))
+// fonction pour récupérer les donner du localstorage
+async function fetchApi(){
+  // Déclaration tableau vide pour envoyer les objets créés 
+  let Produits = []; 
+  if (addToLocalStorage !== null) {
+      for (let i = 0; i < addToLocalStorage.length; i++) {
+      await fetch("http://localhost:3000/api/products/"+ addToLocalStorage[i]._id)
+          .then((res) => res.json())
+          .then((kanap) =>  {
+              //Création d'un objet regroupant les informations
+              const article = {
+                  _id: addToLocalStorage[i]._id,
+                  name: kanap.name,
+                  price: kanap.price,
+                  color: addToLocalStorage[i].color,
+                  quantity: addToLocalStorage[i].quantity,
+                  alt: kanap.altTxt,
+                  img: kanap.imageUrl
+              }
+              //Ajout de l'objet article au tableau
+              Produits.push(article)
+          })
+          .catch(function (err) {
+              console.log(err)
+          })
+      }
+  }
+  return Produits
+}
 
-/**
- * 
- */
-
-const ListeDesProduits = document.getElementById("cart__items").innerHTML= "je mets mon code ici";
-const NombreDeProduits = document.getElementById("totalQuantity").innerHTML= 12;
-const PrixTotal = document.getElementById("totalPrice").innerHTML= 4000;
-/**
- * 
- */
-// sélectionner le conteneur d'affichage du panier
-const cartContainer = document.querySelector('.cart');
-
-// si le panier est vide, afficher un message
-if (cartItems.length === 0) {
-  cartContainer.innerHTML = '<p>Votre panier est vide.</p>';
-} else {
-  // créer une table pour afficher les articles dans le panier
-  const table = document.createElement('table');
-  table.classList.add('cart__table');
-
-  // ajouter une ligne d'en-tête à la table
-  const headerRow = document.createElement('tr');
-  headerRow.innerHTML = `
-    <th>Produit</th>
-    <th>Couleur</th>
-    <th>Quantité</th>
-    <th>Prix unitaire</th>
-    <th>Total</th>
-  `;
-  table.appendChild(headerRow);
-
-  // parcourir chaque article dans le panier et ajouter une ligne à la table pour chaque article
-  let total = 0;
-  console.log(cartItems);
-  cartItems.forEach(async item => {
-       // on a chaque élément avec sa quantité, son id, sa couleur
-    // il nous manque le prix unitaire qu'on sait récupérer dans l'api
-     // todo : aller récupérer le prix de l'élément (le canapé ) via l'api.
-     // puis on multiplie le prix unitaire par la quantité
-     // puis on affiche le prix dans le tableau.
-  // aller récupérer le prix de l'article via l'API
-
-
-    // aller récupérer le prix de l'article via l'API
-    const response = await fetch(`http://localhost:3000/api/products/${item.idSelectedProduct}`);
-    const data = await response.json();
-    const price = data.price / 100; // diviser par 100 pour afficher le prix en euros
-
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${item.nameSelectedProduct}</td>
-      <td>${item.colorSelectedProduct}</td>
-      <td>${item.quantity}</td>
-      <td>${price.toFixed(2)} €</td>
-      <td>${(price * item.quantity).toFixed(2)} €</td>
-    `;
-    table.appendChild(row);
-    total += price * item.quantity || 0;
-  });
-
-  // ajouter la table au conteneur d'affichage du panier
-  cartContainer.appendChild(table);
-
-  // afficher le total du panier
-  const totalRow = document.createElement('div');
-  totalRow.classList.add('cart__total');
-  totalRow.innerHTML = `<p>Total: ${total} €</p>`;
-  cartContainer.appendChild(totalRow);
+//Fonction pour afficher les produis sur la page panier 
+showProduct()
+async function showProduct() {
+	const responseFetch = await fetchApi()
+    if(addToLocalStorage !== 0) {
+        //Selection Element du DOM 
+        const cartItems = document.querySelector("#cart__items")
+        const totalQuantity = document.querySelector("#totalQuantity")
+        responseFetch.forEach((product) => { 
+            cartItems.innerHTML += `
+         <article class="cart__item" data-id="${product._id}" data-color="${product.colors}" data-quantity="${product.quantity}" data-price="${product.price}">
+                     <div class="cart__item__img">
+                       <img src="${product.img}" alt="Photographie d'un canapé">
+                    </div>
+                    <div class="cart__item__content">
+                        <div class="cart__item__content__description">
+                            <h2>${product.name}</h2>
+                            <p>${product.color}</p>
+                            <p>${product.price}</p>
+                        </div>
+                        <div class="cart__item__content__settings">
+                            <div class="cart__item__content__settings__quantity">
+                                <p> Qté :</p>
+                                <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${product.quantity}">
+                            </div>
+                                <div class="cart__item__content__settings__delete">
+                                <p class="deleteItem">Supprimer</p> 
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `
+        })
+        editQuantity()
+        totalProduct()
+    } 
 }
 
