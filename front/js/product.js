@@ -1,8 +1,8 @@
 // Récupération de l'URL actuelle de la page
-const str = window.location.href;
+const page = window.location.href;
 
 // Création d'un objet URL à partir de la chaîne d'URL
-const url = new URL(str);
+const url = new URL(page);
 
 // Récupération de la valeur de la clé _id dans la requête d'URL
 const idProduct = url.searchParams.get("_id");
