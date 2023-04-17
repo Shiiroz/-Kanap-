@@ -1,7 +1,10 @@
-const url = "http://localhost:3000/api/products"; //Recuperation du Catalogue de canapés
+//const url = "http://localhost:3000/api/products"; //Recuperation du Catalogue de canapés
 const catalogue = document.getElementById("items");
 
-async function getApiCatalog() {
+import * as apiFunctions from "./apiFunctions.js"
+
+
+/*async function getApiCatalog() {
     let catalog = {}
 
     await fetch(url)
@@ -9,7 +12,7 @@ async function getApiCatalog() {
     .then ((data) => {catalog = data})
 
     return catalog;
-}
+}*/
     
 function buildHtml(elements) {
             console.log(elements)
@@ -25,4 +28,6 @@ function buildHtml(elements) {
 }
 
 
-buildHtml(await getApiCatalog());
+//buildHtml(await getApiCatalog());
+apiFunctions.getProducts().then( products => buildHtml(products));
+
