@@ -24,7 +24,7 @@ for(let produit of panier) {
           <div class="cart__item__content__settings">
             <div class="cart__item__content__settings__quantity">
               <p>Qté : </p>
-              <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="1">
+              <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${produit.quantitySelectedProduct}">
             </div>
             <div class="cart__item__content__settings__delete">
               <p class="deleteItem">Supprimer</p>
@@ -33,6 +33,26 @@ for(let produit of panier) {
         </div>
       </article>
     `;
+
+    // Gestion de la suppression de l'article
+    
+    let deleteButton = produitElement.querySelector(".deleteItem");
+    deleteButton.addEventListener("click", deleteProduct(id));
+    
+  
+
+
     panierElement.appendChild(produitElement);
-  })
+  });
 }
+
+// Calculer le nombre total d'articles dans le panier
+let totalItems = 0;
+for(let produit of panier) {
+  totalItems += produit.quantity;
+}
+
+
+// Afficher le nombre total d'articles dans le panier
+let totalItemsElement = document.getElementById("totalQuantity");
+totalItemsElement.innerHTML = totalItems;

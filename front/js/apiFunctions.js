@@ -20,21 +20,24 @@ async function getProduct(id) {
     return product;
 }
 
-export {getProduct , getProducts}
+async function getProductImageUrl(id) {
+    let data = await getProduct(id);
 
-/*
-getProducts().then( x => {
-    //console.log(x);
+    return data["imageUrl"];
+}
 
-    x.forEach(element => {
-        getProduct(element._id).then(y =>{
-            //console.log(y);
-        })
-    });
-})
+async function getProductPrice(id) {
+    let data = await getProduct(id);
 
+    return data["price"];
+}
 
-let testId = "8906dfda133f4c20a9d0e34f18adcf06";
-getProduct(testId).then(productData => {
-    console.log(productData)
-})*/
+function deleteProduct(id) {
+    let id = produitElement.dataset.id;
+      let color = produitElement.dataset.color;
+      let index = panier.findIndex((p) => p.idSelectedProduct == id && p.colorSelectedProduct == color);
+      panier.splice(index, 1);
+      localStorage.setItem("kanapLs", JSON.stringify(panier));
+      produitElement.remove();
+}
+export {getProduct , getProducts , getProductImageUrl , getProductPrice , deleteProduct}
