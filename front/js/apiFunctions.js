@@ -32,12 +32,4 @@ async function getProductPrice(id) {
     return data["price"];
 }
 
-function deleteProduct(id) {
-    let id = produitElement.dataset.id;
-      let color = produitElement.dataset.color;
-      let index = panier.findIndex((p) => p.idSelectedProduct == id && p.colorSelectedProduct == color);
-      panier.splice(index, 1);
-      localStorage.setItem("kanapLs", JSON.stringify(panier));
-      produitElement.remove();
-}
-export {getProduct , getProducts , getProductImageUrl , getProductPrice , deleteProduct}
+export {getProduct , getProducts , getProductImageUrl , getProductPrice}

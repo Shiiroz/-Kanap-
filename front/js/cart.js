@@ -36,8 +36,8 @@ for(let produit of panier) {
 
     // Gestion de la suppression de l'article
     
-    let deleteButton = produitElement.querySelector(".deleteItem");
-    deleteButton.addEventListener("click", deleteProduct(id));
+    // let deleteButton = produitElement.querySelector(".deleteItem");
+    // deleteButton.addEventListener("click", deleteProduct(id));
     
   
 

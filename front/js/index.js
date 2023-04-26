@@ -1,18 +1,6 @@
-//const url = "http://localhost:3000/api/products"; //Recuperation du Catalogue de canapés
 const catalogue = document.getElementById("items");
 
 import * as apiFunctions from "./apiFunctions.js"
-
-
-/*async function getApiCatalog() {
-    let catalog = {}
-
-    await fetch(url)
-    .then((response) => response.json())
-    .then ((data) => {catalog = data})
-
-    return catalog;
-}*/
     
 function buildHtml(elements) {
             console.log(elements)

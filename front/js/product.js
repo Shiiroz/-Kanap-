@@ -1,4 +1,3 @@
-
 // Récupération de l'ID du produit à afficher depuis l'URL
 const params = new URL(document.location).searchParams;
 const _id  = params.get("_id");
