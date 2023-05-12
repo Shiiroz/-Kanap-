@@ -40,19 +40,20 @@ for(let produit of panier) {
     // deleteButton.addEventListener("click", deleteProduct(id));
     
   
-
-
     panierElement.appendChild(produitElement);
   });
 }
 
-// Calculer le nombre total d'articles dans le panier
-let totalItems = 0;
-for(let produit of panier) {
-  totalItems += produit.quantity;
-}
+// // Calculer le nombre total d'articles dans le panier
+// let totalItems = 0;
+// for(let produit of panier) {
+//   totalItems += produit.quantity;
+// }
 
 
-// Afficher le nombre total d'articles dans le panier
-let totalItemsElement = document.getElementById("totalQuantity");
-totalItemsElement.innerHTML = totalItems;
+// // Afficher le nombre total d'articles dans le panier
+// let totalItemsElement = document.getElementById("totalQuantity");
+// totalItemsElement.innerHTML = totalItems;
+
+
+  

@@ -139,7 +139,7 @@ const contact = {
 
         fetch("http://localhost:3000/api/products/order", {
             method: "POST",
-            body:JSON.stringify({contact, products}) ,
+            body:JSON.stringify({contact, Kanapls}) ,
             headers: {
                 "Content-Type": "application/json",
             },
@@ -155,7 +155,7 @@ const contact = {
             orderId = server.orderId;
             // Si la variable orderId n'est pas une chaîne vide on redirige notre utilisateur sur la page confirmation avec la variable :
             if (orderId != "") {
-                alert("✅ Votre commande à bient était prise en compte ✅");
+                alert("Votre commande à bien était prise en compte");
                 location.href = "confirmation.html?id=" + orderId;
             }
         })
