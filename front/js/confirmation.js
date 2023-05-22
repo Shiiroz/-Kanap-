@@ -1,5 +1,5 @@
 // Envoyer une requête POST à l'API du serveur pour valider la commande
-fetch('http://localhost:3000/api/order', {
+/*fetch('http://localhost:3000/api/order', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'
@@ -34,4 +34,4 @@ fetch('http://localhost:3000/api/order', {
 .catch(error => {
   // Gérer les erreurs
   console.error(error);
-});
+});*/

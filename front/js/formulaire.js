@@ -136,10 +136,13 @@ const contact = {
     
     
     function sendFromToServer () {
-
+        const panier = localStorage.getItem("kanapLs"); 
+        console.log(contact)
+        console.log(panier)
+        let productId = ["a557292fe5814ea2b15c6ef4bd73ed83"];
         fetch("http://localhost:3000/api/products/order", {
             method: "POST",
-            body:JSON.stringify({contact, Kanapls}) ,
+            body:JSON.stringify({contact, productId}) ,
             headers: {
                 "Content-Type": "application/json",
             },
@@ -158,6 +161,9 @@ const contact = {
                 alert("Votre commande à bien était prise en compte");
                 location.href = "confirmation.html?id=" + orderId;
             }
+        })
+        .catch((erreur)=>{
+            console.log(productId);
         })
     }
 })

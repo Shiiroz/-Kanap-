@@ -43,3 +43,7 @@ function deleteProduct(id) {
       localStorage.setItem("kanapLs", JSON.stringify(panier));
       produitElement.remove();
 }
+
+export function test(){ 
+  console.log("test");
+}
