@@ -139,31 +139,36 @@ const contact = {
         const panier = localStorage.getItem("kanapLs"); 
         console.log(contact)
         console.log(panier)
-        let productId = ["a557292fe5814ea2b15c6ef4bd73ed83"];
-        fetch("http://localhost:3000/api/products/order", {
+        // Tableau des produits selon le back-end 
+        const products = []
+
+    //Boucle pour récupérer les id dans le local storage
+    for (let k = 0; k < panier.length; k++) {
+        const productId = panier[k]._id; 
+        products.push(productId);
+}
+       fetch("http://localhost:3000/api/products/order", {
             method: "POST",
-            body:JSON.stringify({contact, productId}) ,
+            body:JSON.stringify({contact, products }) ,
             headers: {
                 "Content-Type": "application/json",
             },
         }) 
         
-        // Ensuite on stock la réponse de l'api (orderId) :
+        // Ensuite on stock la réponse de l'api 
         .then((response) => {
             return response.json();
         })
         
 
         .then((server) => {
-            orderId = server.orderId;
+          const orderId = server.orderId;
             // Si la variable orderId n'est pas une chaîne vide on redirige notre utilisateur sur la page confirmation avec la variable :
             if (orderId != "") {
                 alert("Votre commande à bien était prise en compte");
                 location.href = "confirmation.html?id=" + orderId;
             }
         })
-        .catch((erreur)=>{
-            console.log(productId);
-        })
+        
     }
 })

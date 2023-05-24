@@ -44,6 +44,3 @@ function deleteProduct(id) {
       produitElement.remove();
 }
 
-export function test(){ 
-  console.log("test");
-}

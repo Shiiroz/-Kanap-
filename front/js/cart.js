@@ -1,5 +1,4 @@
 import * as apiFunctions from "./apiFunctions.js";
-import { test } from "./cartFunctions.js";
 //Récupérez les données stockées dans le localStorage à l'aide de la méthode getItem()
 //Convertissez les données récupérées en objet JSON à l'aide de la méthode JSON.parse()
 const panier = JSON.parse(localStorage.getItem("kanapLs"));
@@ -7,7 +6,7 @@ const panier = JSON.parse(localStorage.getItem("kanapLs"));
 // Sélectionner l'élément HTML où vous voulez afficher les produits du panier
 let panierElement = document.getElementById("cart__items");
 
-test();
+
 // Créer un élément HTML pour chaque produit dans le panier
 for(let produit of panier) {
     apiFunctions.getProduct(produit.idSelectedProduct).then( productData => {
@@ -35,16 +34,16 @@ for(let produit of panier) {
           </div>
         </article>
       `;
-// Ajouter un gestionnaire d'événements pour chaque champ de quantité
-let quantityField = produitElement.querySelector(".itemQuantity");
-quantityField.addEventListener("change", () => {
-  // Modifier la quantité de l'article dans le panier
-  produit.quantity = parseInt(quantityField.value);
-  localStorage.setItem("kanapLs", JSON.stringify(panier));
+      // Ajouter un gestionnaire d'événements pour chaque champ de quantité
+      let quantityField = produitElement.querySelector(".itemQuantity");
+      quantityField.addEventListener("change", () => {
+        // Modifier la quantité de l'article dans le panier
+        produit.quantity = parseInt(quantityField.value);
+        localStorage.setItem("kanapLs", JSON.stringify(panier));
 
-  // Recalculer le prix total du panier
-  calculateTotalPrice();
-  updateTotalArticles();
+        // Recalculer le prix total du panier
+        calculateTotalPrice();
+        updateTotalArticles();
 
 });
 
