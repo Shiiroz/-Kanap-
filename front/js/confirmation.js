@@ -6,7 +6,7 @@ confirmation()
 function confirmation() {
     const confirmation = document.querySelector("#orderId")
     //Affichage de l'Id sur la page confirmation
-    confirmation.innerHTML = `${getArticle}`
+    confirmation.innerHTML = `${orderId}`
     //Ensuite vider le local storage
     localStorage.clear()
 }

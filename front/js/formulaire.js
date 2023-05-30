@@ -1,6 +1,8 @@
 //Sélection du bouton commander :
 let btnSendForm = document.querySelector('#order');
 
+// Tableau des produits selon le back-end 
+const products = []
 
 //Écoute du bouton commander sur le click pour pouvoir contrôler, valider et ennoyer le formulaire et les produits au back-end :
 btnSendForm.addEventListener('click', (e) => {
@@ -9,11 +11,11 @@ e.preventDefault();
 
 //Récupération des valeur du formulaire :
 const contact = {
-    firstName : document.querySelector("#firstName").value,
-    lastName : document.querySelector("#lastName").value,
-    address : document.querySelector("#address").value,
-    city : document.querySelector("#city").value,
-    email : document.querySelector("#email").value,
+    "firstName" : document.querySelector("#firstName").value,
+    "lastName" : document.querySelector("#lastName").value,
+    "address" : document.querySelector("#address").value,
+    "city" : document.querySelector("#city").value,
+    "email" : document.querySelector("#email").value,
     
 };
     
@@ -117,7 +119,8 @@ const contact = {
     //Contrôle validité formulaire avant envoie dans le locale storage : 
     if (firstNameControle() && lastNameControle() && addressControl() && cityControl() && emailControle()) {
     //Mettre l'objet "contact" dans le local storage :
-        localStorage.setItem("contact", JSON.stringify(contact));
+        localStorage.setItem("contact",JSON.stringify(contact));
+
         sendFromToServer();
     } 
     
@@ -135,21 +138,22 @@ const contact = {
     //REQUÊTE DU SERVEUR 
     
     
-    function sendFromToServer () {
-        const panier = localStorage.getItem("kanapLs"); 
-        console.log(contact)
-        console.log(panier)
-        // Tableau des produits selon le back-end 
-        const products = []
 
+     function sendFromToServer () {
+        const panier = JSON.parse(localStorage.getItem("kanapLs")) ; 
     //Boucle pour récupérer les id dans le local storage
     for (let k = 0; k < panier.length; k++) {
-        const productId = panier[k]._id; 
+        const productId = panier[k].idSelectedProduct; 
         products.push(productId);
-}
+    }
+    console.log(products)
        fetch("http://localhost:3000/api/products/order", {
             method: "POST",
             body:JSON.stringify({contact, products }) ,
+            // body: {
+            //     "contact": contact,
+            //     "products": products
+            // },
             headers: {
                 "Content-Type": "application/json",
             },
@@ -163,6 +167,7 @@ const contact = {
 
         .then((server) => {
           const orderId = server.orderId;
+          console.log(orderId);
             // Si la variable orderId n'est pas une chaîne vide on redirige notre utilisateur sur la page confirmation avec la variable :
             if (orderId != "") {
                 alert("Votre commande à bien était prise en compte");
