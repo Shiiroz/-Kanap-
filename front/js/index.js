@@ -3,7 +3,6 @@ const catalogue = document.getElementById("items");
 import * as apiFunctions from "./apiFunctions.js"
     
 function buildHtml(elements) {
-            console.log(elements)
         elements.forEach(element => {
             catalogue.innerHTML += `<a href="./product.html?_id=` + element._id + `">
             <article>

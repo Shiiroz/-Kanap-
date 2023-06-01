@@ -4,7 +4,6 @@ const _id  = params.get("_id");
 
 //  l'URL de l'API pour récupérer les informations du produit
 const url = `http://localhost:3000/api/products/${_id}`;
-console.log(url)
 
 // Récupère l'élément correspondant à l'id sélectionné depuis l'API
 const getElement = async () => {
@@ -13,7 +12,6 @@ const getElement = async () => {
         return response.json()
     })
     .then(function(data){
-        console.log(data)
         const addTitre = (document.getElementById("title").innerHTML= data.name)
         const addPrix = (document.getElementById("price").innerHTML= data.price)
         const addImage = (document.createElement("img"))
