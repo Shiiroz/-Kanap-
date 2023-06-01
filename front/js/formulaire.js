@@ -150,10 +150,6 @@ const contact = {
        fetch("http://localhost:3000/api/products/order", {
             method: "POST",
             body:JSON.stringify({contact, products }) ,
-            // body: {
-            //     "contact": contact,
-            //     "products": products
-            // },
             headers: {
                 "Content-Type": "application/json",
             },
